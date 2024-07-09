@@ -1,0 +1,50 @@
+services:
+  synapse:
+    image: xdillfrescott/synapse:latest
+    container_name: synapse
+    restart: always
+    depends_on:
+      - maindb
+    ports:
+      - "8008:8008"
+    volumes:
+      - "./storage:/storage"
+      - "./data:/data"
+
+  maindb:
+    restart: always
+    image: postgres:16
+    container_name: maindb
+    environment:
+      POSTGRES_DB: synapse
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: <password>
+      POSTGRES_INITDB_ARGS: --encoding=UTF-8 --lc-collate=C --lc-ctype=C
+    volumes:
+      - ./maindb_data:/var/lib/postgresql/data
+
+  syncdb:
+    restart: always
+    image: postgres:16
+    container_name: syncdb
+    environment:
+      POSTGRES_DB: syncv3
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: <password>
+    volumes:
+      - ./syncdb_data:/var/lib/postgresql/data
+
+  sliding_sync:
+    restart: always
+    image: ghcr.io/matrix-org/sliding-sync:latest
+    container_name: sliding_sync
+    depends_on:
+      - syncdb
+      - synapse
+    ports:
+      - "8009:8009"
+    environment:
+      SYNCV3_SERVER: "http://synapse:8008"
+      SYNCV3_DB: "postgres://postgres:<password>@syncdb:5432/syncv3?sslmode=disable"
+      SYNCV3_SECRET: <secret here>
+      SYNCV3_BINDADDR: "0.0.0.0:8009"
