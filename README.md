@@ -1,4 +1,4 @@
-## Docker compose and dockerfile for self hosting synapse, the maxtrix homeserver! (and sliding sync)
+## Docker compose and dockerfile for self hosting synapse, the matrix homeserver! (and sliding sync)
 
 Make sure your `homeserver.yaml` is in `./data` (local path) and the media storage in said file is set to `/storage` (docker path).
 
@@ -12,6 +12,6 @@ Don't forget to wire up the exposed synapse and sliding sync ports to the public
 
 ## Delegation
 
-As far as delegation goes you can essentially copy [this GitHub repo](https://github.com/dillfrescott/dill.tokyo) but put your own values in `.well-known/matrix/client` and `.well-known/matrix/server` files! Then host it using GitHub Pages! Also you can modify `index.html` to have it redirect to any site you wish! Or even get rid of it entirely! It's totally up to you!
+As far as delegation goes you can essentially copy [this repo](https://github.com/dillfrescott/dill.tokyo) but put your own values in `.well-known/matrix/client` and `.well-known/matrix/server` files! Then host it using GitHub Pages! Also you can modify `index.html` to have it redirect to any site you wish! Or even get rid of it entirely! It's totally up to you!
 
 Have fun! :)
