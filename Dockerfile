@@ -16,7 +16,7 @@ WORKDIR synapse
 # Version 1.110.0
 RUN git checkout 75b788f49f005bbc70b459d30913f1f7abf847cb
 
-RUN pip install psycopg2 poetry setuptools-rust==1.8.1 --break-system-packages
+RUN pip install psycopg2 boto3 poetry setuptools-rust==1.8.1 --break-system-packages
 
 RUN python3 -m build --wheel --no-isolation
 
