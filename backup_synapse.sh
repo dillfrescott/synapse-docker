@@ -18,4 +18,4 @@ cd /home/cross/synapse
 
 sudo docker compose up -d
 
-sudo find "$BACKUP_DIR" -type f -name "synapse_backup_*.tgz" -mtime +3 -exec rm -f {} \;
+sudo find "$BACKUP_DIR" -type f -name "synapse_backup_*.tgz" -mtime +2 -exec rm -f {} \;
