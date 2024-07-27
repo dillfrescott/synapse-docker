@@ -2,6 +2,12 @@
 
 BACKUP_DIR="/home/cross/HDD/synapse_backups"
 
+# Check if the HDD is mounted
+if ! mountpoint -q /home/cross/HDD; then
+  echo "Error: /home/cross/HDD is not mounted. Exiting."
+  exit 1
+fi
+
 sudo mkdir -p "$BACKUP_DIR"
 
 DATE=$(date +"%Y-%m-%d_%H-%M-%S")
