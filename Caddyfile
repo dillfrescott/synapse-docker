@@ -1,7 +1,15 @@
 https://matrix.dill.moe {
     # Handle the /.well-known/matrix/client path
     handle_path /.well-known/matrix/client {
-        respond `{"m.homeserver":{"base_url":"https://matrix.dill.moe"}}` 200
+        respond `{
+            "m.homeserver": {
+                "base_url": "https://matrix.dill.moe"
+            },
+            "org.matrix.msc2965.authentication": {
+                "issuer": "https://account.dill.moe/",
+                "account": "https://account.dill.moe"
+            }
+        }` 200
     }
 
     # Handle the /.well-known/matrix/server path
@@ -9,8 +17,16 @@ https://matrix.dill.moe {
         respond `{"m.server":"matrix.dill.moe:443"}` 200
     }
 
-    # Reverse proxy for other requests
+    # Reverse proxy for other requests (Synapse)
     reverse_proxy http://localhost:8008 {
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Real-IP {remote_host}
+    }
+}
+
+# Block for MAS
+https://account.dill.moe {
+    reverse_proxy http://localhost:8080 {
         header_up X-Forwarded-For {remote_host}
         header_up X-Real-IP {remote_host}
     }
