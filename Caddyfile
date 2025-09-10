@@ -1,0 +1,17 @@
+https://matrix.dill.moe {
+    # Handle the /.well-known/matrix/client path
+    handle_path /.well-known/matrix/client {
+        respond `{"m.homeserver":{"base_url":"https://matrix.dill.moe"}}` 200
+    }
+
+    # Handle the /.well-known/matrix/server path
+    handle_path /.well-known/matrix/server {
+        respond `{"m.server":"matrix.dill.moe:443"}` 200
+    }
+
+    # Reverse proxy for other requests
+    reverse_proxy http://localhost:8008 {
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Real-IP {remote_host}
+    }
+}
