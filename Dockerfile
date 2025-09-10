@@ -23,7 +23,7 @@ RUN apt update && apt upgrade -y
 
 RUN DEBIAN_FRONTEND=noninteractive apt install -y python3 python3-pip postgresql-server-dev-all wget
 
-RUN pip install psycopg2 boto3 --break-system-packages
+RUN pip install psycopg2 boto3 authlib --break-system-packages
 
 COPY --from=builder /synapse/dist /dist
 
