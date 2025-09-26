@@ -12,7 +12,7 @@ services:
 
   db:
     restart: always
-    image: postgres:17
+    image: postgres:18
     container_name: maindb
     environment:
       POSTGRES_DB: synapse
@@ -20,7 +20,7 @@ services:
       POSTGRES_PASSWORD: <password>
       POSTGRES_INITDB_ARGS: --encoding=UTF-8 --lc-collate=C --lc-ctype=C
     volumes:
-      - ./db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
 
   matrix-auth-service:
     image: ghcr.io/element-hq/matrix-authentication-service:latest
@@ -36,12 +36,16 @@ services:
     restart: always
 
   masdb:
-    image: postgres:17
+    image: postgres:18
     container_name: mas-db
     environment:
       POSTGRES_USER: mas_user
       POSTGRES_PASSWORD: <password>
       POSTGRES_DB: mas
     volumes:
-      - ./masdb_data:/var/lib/postgresql/data
+      - masdb_data:/var/lib/postgresql/data
     restart: always
+
+volumes:
+  db_data:
+  masdb_data:
