@@ -10,8 +10,8 @@ RUN git clone https://github.com/element-hq/synapse /synapse
 
 WORKDIR /synapse
 
-# Version 1.138.2
-RUN git checkout 6c292dc4ee98a3a935cf0bd23e96a187b9e81c08
+# Version 1.139.0
+RUN git checkout 72020f3f2c1890e6b262001bcdd6f642b729b9a9
 
 RUN pip install psycopg2 boto3 poetry poetry-core==1.9.0 setuptools-rust==1.8.1 --break-system-packages
 
